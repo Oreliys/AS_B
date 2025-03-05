@@ -10,12 +10,12 @@ DC-RTR-1
 nano /etc/networki/interfaces
 auto enp1s0
 iface enp1s0 inet static
-address 100.200.100.20/24
-gateway 100.200.100.10
+address 200.100.100.20/24
+gateway 200.100.100.10
 
 auto enp6s0
 iface enp6s0 inet static
-address 10.15.10.2/24
+address 10.15.10.3/24
 
 4)Включаем марштрутизация IPv4
 echo net.ipv4.ip_forward=1>>/etc/sysctl.conf
