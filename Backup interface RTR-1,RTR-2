@@ -1,0 +1,92 @@
+apt install keepalived
+cd /etc/keepalived
+Создаем новый конфиг (DC-RTR-1)
+nano keepalived.conf
+=================================
+global_defs {
+        enable_script_security
+        script_user root
+}
+
+vrrp_script health_check {
+          script "/etc/keepalived/check.sh"
+          interval 4
+          timeout 3
+          rise 3
+          fall 3
+}
+
+vrrp_instance router_dc
+          state MASTER
+          interface enp6s0
+          virtual_router_id 80
+          advert_int 1
+          priority 100
+          virtual_ipaddress {
+                  10.15.10.1/24
+          }
+          track_interface {
+                  enp6s0
+          }
+          track_script {
+              health_check    
+          }
+}
+===================================
+Создаем файл check.sh в этой папке
+nano check.sh
+===============
+#!/bin/bash
+ping -W 2 -c 1 77.88.8.8 > /dev/null 2>&1
+===============
+chmod +x check.sh
+
+systemctl restart keepalived
+
+Создаем новый конфиг или коипруем его по SSH (DC-RTR-2)
+Правbv конфиг ssh (/etc/ssh/sshd_config)
+#PermitRootLogin prohibit-password > PermitRootLogin yes
+scp ./* root@10.15.10.2:/etc/keepalived/
+
+nano keepalived.conf
+=================================
+global_defs {
+        enable_script_security
+        script_user root
+}
+
+vrrp_script health_check {
+          script "/etc/keepalived/check.sh"
+          interval 4
+          timeout 3
+          rise 3
+          fall 3
+}
+
+vrrp_instance router_dc
+          state BACKUP
+          interface enp6s0
+          virtual_router_id 80
+          advert_int 1
+          priority 100
+          virtual_ipaddress {
+                  10.15.10.1/24
+          }
+          track_interface {
+                  enp6s0
+          }
+          track_script {
+              health_check    
+          }
+}
+===================================
+Создаем файл check.sh в этой папке
+nano check.sh
+===============
+#!/bin/bash
+ping -W 2 -c 1 77.88.8.8 > /dev/null 2>&1
+===============
+chmod +x check.sh
+
+systemctl restart keepalived
+
