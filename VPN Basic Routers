@@ -1,0 +1,102 @@
+Создать GRE_tunn_Stronswan_ipsec
+
+#Stronswan realization ipsec tunneling 
+apt install strongswan
+1)DC-RTR-1 (Основные тунели до офиса в москве и екатеренбурге
+###################################################################################
+
+cat /etc/tunnel/msk_tunnel.sh (DC-RTR-1)
+#!/bin/bash
+ip tunnel add tun1 mode gre local 200.100.100.20 remote 188.121.90.2 ttl 64
+ip link set tun1 up
+ip addr add 10.7.7.1/30 dev tun1
+
+###################################################################################
+###################################################################################
+
+cat /etc/tunnel/ektr_tunnel.sh (DC-RTR-1)
+#!/bin/bash
+ip tunnel add tun2 mode gre local 200.100.100.20 remote 88.8.8.27 ttl 64
+ip link set tun2 up
+ip addr add 10.6.6.1/30 dev tun2
+###################################################################################
+
+chmod +x msk_tunnel.sh ektr_tunnel.sh
+
+nano /etc/crontab (Добавляем в конец конфига)
+@reboot root /etc/tunnel/msk_tunnel.sh
+@reboot root /etc/tunnel/ektr_tunnel.sh
+
+2)DC-RTR-2 (Основные тунели до офиса в москве и екатеренбурге
+###################################################################################
+
+cat /etc/tunnel/msk_tunnel.sh (DC-RTR-2)
+#!/bin/bash
+ip tunnel add tun1 mode gre local 100.200.100.20 remote 188.121.90.2 ttl 64
+ip addr add 10.5.5.1/30 dev tun1
+ip link set tun1 up
+
+###################################################################################
+###################################################################################
+
+cat /etc/tunnel/ektr_tunnel.sh (DC-RTR-2)
+#!/bin/bash
+ip tunnel add tun2 mode gre local 100.200.100.20 remote 88.8.8.27 ttl 64
+ip addr add 10.8.8.1/30 dev tun2
+ip link set tun2 up
+###################################################################################
+
+chmod +x msk_tunnel.sh ektr_tunnel.sh
+
+nano /etc/crontab (Добавляем в конец конфига)
+@reboot root /etc/tunnel/msk_tunnel.sh
+@reboot root /etc/tunnel/ektr_tunnel.sh
+
+3)MSK-RTR (Основные тунели до датацентра DC)
+###################################################################################
+
+cat /etc/tunnel/RTR1_tunnel.sh (MSK-RTR)
+#!/bin/bash
+ip tunnel add tun1 mode gre local 188.121.90.2 remote 200.100.100.20 ttl 64
+ip addr add 10.7.7.2/30 dev tun1
+ip link set tun1 up
+
+###################################################################################
+###################################################################################
+
+cat /etc/tunnel/RTR2_tunnel.sh (MSK-RTR)
+#!/bin/bash
+ip tunnel add tun2 mode gre local 188.121.90.2 remote 100.200.100.20 ttl 64
+ip addr add 10.5.5.2/30 dev tun2
+ip link set tun2 up
+###################################################################################
+
+chmod +x RTR1_tunnel.sh RTR2_tunnel.sh
+
+nano /etc/crontab (Добавляем в конец конфига)
+@reboot root /etc/tunnel/RTR1_tunnel.sh
+@reboot root /etc/tunnel/RTR2_tunnel.sh
+
+4)YEKT-RTR (Основные тунели до датацентра DC)
+###################################################################################
+
+cat /etc/tunnel/RTR1_tunnel.sh (YEKT-RTR)
+#!/bin/bash
+ip tunnel add tun1 mode gre local 88.8.8.27 remote 200.100.100.20 ttl 64
+ip addr add 10.6.6.2/30 dev tun1
+ip link set tun1 up
+###################################################################################
+###################################################################################
+
+cat /etc/tunnel/RTR2_tunnel.sh (YEKT-RTR)
+#!/bin/bash
+ip tunnel add tun2 mode gre local 88.8.8.27 remote 100.200.100.20 ttl 64
+ip addr add 10.8.8.2/30 dev tun2
+ip link set tun2 up
+###################################################################################
+
+chmod +x RTR1_tunnel.sh RTR2_tunnel.sh
+
+nano /etc/crontab (Добавляем в конец конфига)
+@reboot root /etc/tunnel/RTR1_tunnel.sh
+@reboot root /etc/tunnel/RTR2_tunnel.sh
