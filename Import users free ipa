@@ -1,0 +1,17 @@
+Запускаем скрипт когда есть авторизация kerebos
+kinit admin
+
+Заводим группы в FreeIpa:
+Administrators, Workers,TopManagers (Пример)
+
+Создаем исполняемый *sh скрипт,
+Задаем ему права на выполнение
+sudo chmod +x importusers.sh
+
+#!/bin/bash
+while IFS="," read -r LastName FirstName Groups
+do
+  echo P@ssw0rd | echo P@ssw0rd | ipa user-add "${FirstName}"  --first="$FirstName" --last="${LastName}"  --password 
+  ipa user-mod "$FirstName" --setattr=krbPasswordExpiration=20251212121212Z
+  ipa group-add-member $Groups --users="$FirstName
+done < <(tail -n +2 /root/users.csv)
