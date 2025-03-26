@@ -1,22 +1,27 @@
 apt-get install lvm2
 apt-get install cryptsetup
 # Encrypted
-cryptsetup luksFormat /dev/sdb
-cryptsetup luksFormat /dev/sdc
-crypsetup open /dev/sdb cryptlvm
-crypsetup open /dev/sdc cryptlvm2
+cryptsetup luksFormat /dev/vdb
+cryptsetup luksFormat /dev/vdc
+cryptsetup luksFormat /dev/vdd
+crypsetup open /dev/vdb cryptlvm
+crypsetup open /dev/vdc cryptlvm2
+crypsetup open /dev/vdd cryptlvm3
 pvcreate /dev/mapper/cryptlvm
 pvcreate /dev/mapper/cryptlvm2
-vgcreate "Vol2" /dev/mapper/cryptlvm /dev/mapper/cryptlvm2
-lvcreate -l 100%FREE -n crypto_lvm Vol2
-mkfs.ext4 /dev/mapper/Vol2-crypto_lvm
+pvcreate /dev/mapper/cryptlvm3
+vgcreate "Vol1" /dev/mapper/cryptlvm /dev/mapper/cryptlvm2 /dev/mapper/cryptlvm3
+lvcreate -l 100%FREE -n crypto_lvm Vol1
+mkfs.ext4 /crypto-folder
 # Gen key secret
 dd if=/dev/urandom of=secretkey bs=512 count=4
 cp secretkey /etc/
-cryptsetup luksAddKey /dev/sdb /etc/secretkey
-cryptsetup luksAddKey /dev/sdc /etc/secretkey
+cryptsetup luksAddKey /dev/vdb /etc/secretkey
+cryptsetup luksAddKey /dev/vdc /etc/secretkey
+cryptsetup luksAddKey /dev/vdd /etc/secretkey
 nano /etc/crypttab |
 | cryptlvm /dev/vdb /etc/secretkey luks,discard 
 | cryptlvm2 /dev/vdc /etc/secretkey luks,discard 
+| cryptlvm3 /dev/vdd /etc/secretkey luks,discard 
 nano /etc/fstab |
-| /dev/mapper/Vol2-crypto_lvm /storage ext4 defaults 0 0
+| /crypto-folder /storage ext4 defaults 0 0
