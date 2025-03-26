@@ -1,0 +1,11 @@
+ON STORAGE
+apt install nfs-server -y nano /etc/exports | | /storage/it *(rw,sync,no_sub_tree_check) | /storage/office *(rw,sync,no_sub_tree_check)
+
+CREATE FOLDERS
+chmod 1775 -R /storage/it chmod 1775 -R /storage/office
+
+ON CLIENT
+apt install nfs-common libpam-mount -y adduser groupadd usermod -a -G cat << EOF > /etc/security/pam_mount.conf.xml EOF
+
+ON STORAGE
+chown root:ID -R /storage/it chown root:ID -R /storage/office
