@@ -12,14 +12,14 @@ nano /etc/security/pam_mount.conf.xml
       fstype="nfs"
       server="10.15.10.150"
       path="/storage/it"
-      mountpoint="~/Desktops/Desktop1/IT"
+      mountpoint="~/Desktops/Desktop1/IT_Folder"
       sgrp="it" /> 
 
 <volune
       fstype="nfs"
       server="10.15.10.150"
       path="/storage/office"
-      mountpoint="~/Desktops/Desktop1/office"
+      mountpoint="~/Desktops/Desktop1/Office_Folder"
       sgrp="office" /> 
 
               <!-- pan_mount parameters: Volume-related --> 
