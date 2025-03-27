@@ -1,0 +1,2 @@
+sed -i s%deb.debian.org%77.88.8.8%g /etc/apt/sources.list
+sed -i s%https://download.astralinux.ru%http://77.88.8.8%g /etc/apt/sources.list
