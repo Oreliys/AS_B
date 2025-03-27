@@ -15,7 +15,7 @@ nano /etc/security/pam_mount.conf.xml
       mountpoint="~/Desktops/Desktop1/IT_Folder"
       sgrp="it" /> 
 
-<volune
+<volume
       fstype="nfs"
       server="10.15.10.150"
       path="/storage/office"
@@ -26,4 +26,4 @@ nano /etc/security/pam_mount.conf.xml
 
 <mkmountpoint enable="1" remove="true" /> 
 
-</pam mount>
+</pam_mount>
