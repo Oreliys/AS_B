@@ -1,7 +1,10 @@
 ON STORAGE
-apt install nfs-server -y nano /etc/exports | | /storage/it *(rw,sync,no_sub_tree_check) | /storage/office *(rw,sync,no_sub_tree_check)
+apt install nfs-server -y nano /etc/exports | | /storage/it *(rw,sync,no_sub_treecheck) | /storage/office *(rw,sync,no_subtree_check)
 
 CREATE FOLDERS
+mkdir /storage/it
+mkdir /storage/office
+
 chmod 1775 -R /storage/it chmod 1775 -R /storage/office
 
 ON CLIENT
