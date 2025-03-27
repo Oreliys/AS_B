@@ -1,0 +1,26 @@
+apt install pam_mount
+
+<mntoptions require="nosuid,nodev" />
+
+<!-- requires ofl from hxtools to be present -->
+<logout wait="0" hup="no" term="no" kill="no" />
+
+<volume
+      fstype="nfs"
+      server="10.15.10.150"
+      path="/storage/it"
+      mountpoint="~/Desktops/Desktop1/IT"
+      sgrp="it" /> 
+
+<volune
+      fstype="nfs"
+      server="10.15.10.150"
+      path="/storage/office"
+      mountpoint="~/Desktops/Desktop1/office"
+      sgrp="office" /> 
+
+              <!-- pan_mount parameters: Volume-related -->> 
+
+<mkmountpoint enable="1" remove="true" /> 
+
+</pam mount>
