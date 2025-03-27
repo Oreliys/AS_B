@@ -19,7 +19,7 @@ apt install pam_mount
       mountpoint="~/Desktops/Desktop1/office"
       sgrp="office" /> 
 
-              <!-- pan_mount parameters: Volume-related -->> 
+              <!-- pan_mount parameters: Volume-related --> 
 
 <mkmountpoint enable="1" remove="true" /> 
 
