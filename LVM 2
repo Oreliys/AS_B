@@ -4,8 +4,8 @@ apt-get install cryptsetup
 cryptsetup luksFormat /dev/vdb
 cryptsetup luksFormat /dev/vdc
 
-crypsetup open /dev/vdb cryptlvm
-crypsetup open /dev/vdc cryptlvm2
+cryptsetup open /dev/vdb cryptlvm
+cryptsetup open /dev/vdc cryptlvm2
 
 pvcreate /dev/mapper/cryptlvm
 pvcreate /dev/mapper/cryptlvm2
