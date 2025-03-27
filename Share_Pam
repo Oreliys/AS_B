@@ -1,5 +1,8 @@
 apt install pam_mount
 
+nano /etc/security/pam_mount.conf.xml
+
+=======================================================
 <mntoptions require="nosuid,nodev" />
 
 <!-- requires ofl from hxtools to be present -->
