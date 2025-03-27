@@ -1,7 +1,7 @@
 #!/bin/bash
 # apt install inotify-tools
 SOURCE_DIR="/storage/office"
-DST_DIR="/storage/office_back"
+DST_DIR="/crypto-folder"
 
 # inotifywait -m -r -e create --format '%w%f' "$SOURCE_DIR" | while read NEW_FILE 
 # do
