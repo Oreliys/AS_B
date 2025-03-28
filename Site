@@ -34,9 +34,9 @@ server {
 Создание пользователей
 apt install apache2-utils
 
-htpasswd /etc/nginx/.htpasswd ssl_admin
+htpasswd /etc/nginx/.adminpasswd ssl_admin
 159753486
-htpasswd /etc/nginx/.htpasswd ssl_worker
+htpasswd /etc/nginx/.workerpasswd ssl_worker
 951753426
 
 mkdir /var/www/admin;mkdir /var/www/worker
