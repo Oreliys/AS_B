@@ -8,7 +8,7 @@ nano /etc/exports | | /storage/it *(rw,sync,no_sub_treecheck) | /storage/office 
 CREATE FOLDERS
 mkdir /storage/it
 mkdir /storage/office
-
+chmod +t /storage/*
 exportfs -a
 
 chmod 1777 -R /storage/it chmod 1777 -R /storage/office
