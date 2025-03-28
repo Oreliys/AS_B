@@ -11,8 +11,19 @@ mkdir /storage/office
 
 chmod 1775 -R /storage/it chmod 1775 -R /storage/office
 
-ON CLIENT
-apt install nfs-common libpam-mount -y adduser groupadd usermod -a -G cat << EOF > /etc/security/pam_mount.conf.xml EOF
+ON CLIENT (MSK-ADMIN MSK-WORKER)
+apt install nfs-common libpam-mount -y
+groupadd  it office
+adduser ivan
+adduser oleg
+
+usermod -aG it ivan
+usermod -aG office oleg
+
+adduser groupadd usermod -a -G cat << EOF > /etc/security/pam_mount.conf.xml EOF
 
 ON STORAGE
 chown root:ID -R /storage/it chown root:ID -R /storage/office
+
+id группа ofice (1002) it (1003) пример!!!!! на АРМ CLIENT
+chown root:1002 -R /storage/it chown root:1003 -R /storage/office
