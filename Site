@@ -6,7 +6,7 @@ apt install nginx
 =================================
 server {
     listen 443 ssl;
-    server_name example.atomskills.local;
+    server_name www.company.cool;
     ssl_certificate /etc/ssl/certs/<cert>
     ssl_certificate_key /etc/ssl/certs/<key>
 
@@ -18,14 +18,14 @@ server {
     location /admin {
         auth_basic "Admin Area";
         auth_basic_user_file /etc/nginx/adminpasswd;
-        alias /var/www/html/admin;
+        alias /var/www/admin;
         index index.html;
     }
 
     location /worker {
         auth_basic "Admin Area";
         auth_basic_user_file /etc/nginx/workerpasswd;
-        alias /var/www/html/worker;
+        alias /var/www/worker;
         index index.html;
     }
 
@@ -52,3 +52,11 @@ nano index.html
         <a href="/admin" class="button">Click here for admin</a>
     </body>
 </html>
+
+Проверить конфиг nginx -t
+systemctl restart nginx
+
+====================
+yekt-worker
+nano /etc/hosts
+192.168.2.1 www.company.cool
