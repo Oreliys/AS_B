@@ -1,15 +1,18 @@
 #!/bin/bash
 # apt install inotify-tools
+# apt install rsync
 SOURCE_DIR="/storage/office"
 DST_DIR="/crypto-folder"
 
-# inotifywait -m -r -e create --format '%w%f' "$SOURCE_DIR" | while read NEW_FILE 
-# do
-#     if echo "$(basename "$NEW_FILE")" | grep -qi "SAVE"; then
-#         rsync -a --relative "./$NEW_FILE#$SOURCE_DIR" "$DST_DIR"
-#         echo "Copy file: $NEW_FILE"
-#     fi
-# done 
+inotifywait -m -r -e create --format '%w%f' "$SOURCE_DIR" | while read NEW_FILE 
+do
+    if echo "$(basename "$NEW_FILE")" | grep -qi "SAVE"; then
+        rsync -a --relative "$NEW_FILE#$SOURCE_DIR" "$DST_DIR"
+        echo "Copy file: $NEW_FILE"
+    fi
+done 
+
+#work 100%
 inotifywait -m -r -e create -e modify --format '%w%f' "$SOURCE_DIR" | while read NEW_FILE
 do
     echo "File exsist: $NEW_FILE"
