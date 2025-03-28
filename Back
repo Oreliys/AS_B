@@ -22,3 +22,22 @@ do
     dir=$(dirname "$NEW_FILE")
     rmdir "$dir" 2>/dev/null
 done
+
+
+
+Создание демона
+nano /etc/systemd/backup.service
+====================================
+[Unit]
+Description=Wath and backup files
+After=network.target
+
+[Service]
+Type=idle
+ExecStart=/bin/bash /etc/backup/backup.sh
+
+[Install]
+WantedBy=multi-user.target
+====================================
+
+systemctl enable --now /etc/systemd/backup.service
