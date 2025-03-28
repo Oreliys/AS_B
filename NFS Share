@@ -9,6 +9,8 @@ CREATE FOLDERS
 mkdir /storage/it
 mkdir /storage/office
 
+exportfs -a
+
 chmod 1775 -R /storage/it chmod 1775 -R /storage/office
 
 ON CLIENT (MSK-ADMIN MSK-WORKER)
