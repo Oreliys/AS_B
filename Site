@@ -1,0 +1,18 @@
+apt install nginx
+
+Конфа сайта
+/etc/nginx/sites-enabled/default
+
+=================================
+
+
+===================================
+Создание пользователей
+htpasswd /etc/nginx/.htpasswd ssl_admin
+159753486
+htpasswd /etc/nginx/.htpasswd ssl_worker
+951753426
+
+cd /var/www/html/
+nano index.html
+1)Clear config
