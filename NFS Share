@@ -2,8 +2,8 @@ ON STORAGE
 apt install nfs-server -y
 nano /etc/exports | | /storage/it *(rw,sync,no_sub_treecheck) | /storage/office *(rw,sync,no_subtree_check)
 
-/storage/it 192.168.1.0/24(rw,sync,no_root_squash,no_subtree_check)
-/storage/office 192.168.1.0/24(rw,sync,no_root_squash,no_subtree_check)
+/storage/it 192.168.1.0/24(rw,sync,no_subtree_check)
+/storage/office 192.168.1.0/24(rw,sync,no_subtree_check)
 
 CREATE FOLDERS
 mkdir /storage/it
@@ -11,7 +11,7 @@ mkdir /storage/office
 
 exportfs -a
 
-chmod 1775 -R /storage/it chmod 1775 -R /storage/office
+chmod 1777 -R /storage/it chmod 1777 -R /storage/office
 
 ON CLIENT (MSK-ADMIN MSK-WORKER)
 apt install nfs-common libpam-mount -y
