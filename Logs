@@ -11,10 +11,20 @@ vim /etc/rsyslog.conf |
 | -
 | module(load="imudp")
 | input(type="imudp" port="514")
+
+Проверяем права
+$FileCreateMode 0644
+$DirCreateMode 0755
+$Umask 0022
+
 | # GLOBAL DIRECTIVES
 | if $hostname contains 'YEKT-DB' or $fromhost-ip contains "192.168.2.150" then {
-|    *.* /opt/logs/YEKT-DB/logs.log
+|    *.* /home/yekt_admin/Desktop/Logs/YEKT-DB.log
 | }
 | if $hostname contains 'YEKT-BILLING' or $fromhost-ip contains "192.168.2.100" then {
-|    *.* /opt/logs/YEKT-BILLING/logs.log
+|    *.* /home/yekt_admin/Desktop/Logs/YEKT-BILLING.log
 | } 
+
+//На всякий случай создаем эту папку (Если каталог не создался) и пользователя 
+adduser yekt_admin
+mkdir /home/yekt_admin/Desktop/Logs/
